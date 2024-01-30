@@ -1,7 +1,7 @@
 """Main App
     App to push messages into the redis queue
 """
-import datetime
+from datetime import datetime
 from json import dumps
 import random
 from time import sleep
@@ -31,7 +31,7 @@ def redis_db():
     
 
 def redis_queue_push(db: redis.Redis, message):
-    db.lpush(config("REDIS_QUEUE_NAME", message))
+    db.lpush(config("REDIS_QUEUE_NAME"), message)
 
 def main(num_messages: int, delay: float = 1):
     """
@@ -48,7 +48,7 @@ def main(num_messages: int, delay: float = 1):
             "id": str(uuid4()),
             "ts": datetime.utcnow().isoformat(),
             "data": {
-                "message_numer": i,
+                "message_number": i,
                 "x": random.randrange(0, 100),
                 "y": random.randrange(0, 100),
             },
